@@ -1,7 +1,4 @@
 from unittest import TestCase
-
-from django.test import selenium
-
 from selenium import webdriver
 
 class FunctionalTest(TestCase):
@@ -12,5 +9,5 @@ class FunctionalTest(TestCase):
         self.browser.quit()
 
     def test_title(self):
-        self.browser.get('http://localhost:8000/')
-        self.assertIn('Busco Ayuda', self.browser.title)
+        self.browser.get('http://localhost:8000')
+        self.assertIn('Busco Ayda', self.browser.title)
