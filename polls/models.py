@@ -11,8 +11,8 @@ class TiposDeServicio(models.Model):
     nombre = models.CharField(max_length=1000)
     imagen = models.ImageField(upload_to='services')
 
-    def __unicode__(self):
-        return u'{0}'.format(self.nombre)
+    def __str__(self):
+        return self.nombre
 
 
 class Trabajador(models.Model):
@@ -44,6 +44,7 @@ class TrabajadorForm(ModelForm):
         label='Años De Experiencia'
     )
     tiposDeServicio = forms.ModelChoiceField(
+
         widget=forms.Select(attrs={'class': 'form-control'}),
         queryset=TiposDeServicio.objects.all(),
         empty_label='Seleccione el tipo de servicio que ofrecerá',

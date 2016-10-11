@@ -1,9 +1,12 @@
 from unittest import TestCase
 from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+
 
 class FunctionalTest(TestCase):
     def setUp(self):
-        self.browser=webdriver.Firefox()
+        self.browser = webdriver.Firefox()
 
     def tearDown(self):
         self.browser.quit()
@@ -14,8 +17,11 @@ class FunctionalTest(TestCase):
 
     def test_registro(self):
         self.browser.get('http://localhost:8000')
+
         link = self.browser.find_element_by_id('id_register')
         link.click()
+
+        time.sleep(5)
 
         nombre = self.browser.find_element_by_id('id_nombre')
         nombre.send_keys('Nazly')
@@ -23,7 +29,7 @@ class FunctionalTest(TestCase):
         apellidos = self.browser.find_element_by_id('id_apellidos')
         apellidos.send_keys('Olmos')
 
-        experiencia = self.browser.find_element_by_id('id_aniosexperiencia')
+        experiencia = self.browser.find_element_by_id('id_aniosExperiencia')
         experiencia.send_keys('5')
 
         self.browser.find_element_by_xpath("//select[@id='id_tiposDeServicio']/option[text()='Desarrollo Web']").click()
@@ -34,7 +40,7 @@ class FunctionalTest(TestCase):
         correo.send_keys('nolmos@gmail.com')
 
         imagen = self.browser.find_element_by_id('id_imagen')
-        imagen.send_keys('C:/users/nazlyolmos/Downloads/imagen.jpg')
+        imagen.send_keys('C:\\Users\\diego\\Pictures\\diego.jpg')
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
         nombreUsuario.send_keys('nolmos')
@@ -44,10 +50,8 @@ class FunctionalTest(TestCase):
 
         botonGrabar = self.browser.find_element_by_id('id_grabar')
         botonGrabar.click()
-        self.browser.implicitly_wait(3)
-        span = self.browser.find_element_by_id(By.XPATH,'//span[text()="Juan Pablo Arevalo')
 
-        self.assertIn('Juan Daniel Arevalo', span.text)
+        self.browser.implicitly_wait(5)
+        span = self.browser.find_element(By.XPATH, '//span[text()="Nazly Olmos"]')
 
-
-
+        self.assertIn('Nazly Olmos', span.text)
