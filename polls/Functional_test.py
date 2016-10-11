@@ -43,7 +43,7 @@ class FunctionalTest(TestCase):
         imagen.send_keys('C:\\Users\\diego\\Pictures\\diego.jpg')
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('nolmos')
+        nombreUsuario.send_keys('yyy')
 
         clave = self.browser.find_element_by_id('id_password')
         clave.send_keys('clave123')
@@ -55,3 +55,12 @@ class FunctionalTest(TestCase):
         span = self.browser.find_element(By.XPATH, '//span[text()="Nazly Olmos"]')
 
         self.assertIn('Nazly Olmos', span.text)
+
+    def test_ver_detalle(self):
+        self.browser.get('http://localhost:8000')
+        span = self.browser.find_element(By.XPATH, '//span[text()="Nazly Olmos"]')
+        span.click()
+
+        h2= self.browser.find_element(By.XPATH, '//h2[text()="Nazly O"]')
+
+        self.assertIn('Nazly Olmos', h2.text)
