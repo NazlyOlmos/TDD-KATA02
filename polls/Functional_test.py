@@ -24,23 +24,6 @@ class FunctionalTest(TestCase):
 
         self.assertIn('Nazly Olmos', h2.text)
 
-    def test_login(self):
-        self.browser.get('http://localhost:8000')
-
-        link = self.browser.find_element_by_id('id_login')
-        link.click()
-
-        nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('cncc')
-
-        clave = self.browser.find_element_by_id('id_password')
-        clave.send_keys('clave123')
-
-        botonLogin = self.browser.find_element_by_id('id_iniciar')
-        botonLogin.click()
-
-        p = self.browser.find_element(By.XPATH, "//p[text()='Nazly Olmos']")
-
     def test_registro(self):
         self.browser.get('http://localhost:8000')
 
@@ -69,7 +52,7 @@ class FunctionalTest(TestCase):
         imagen.send_keys('C:\\Users\\diego\\Pictures\\diego.jpg')
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('gtnngt')
+        nombreUsuario.send_keys('yego23')
 
         clave = self.browser.find_element_by_id('id_password')
         clave.send_keys('clave123')
@@ -81,3 +64,21 @@ class FunctionalTest(TestCase):
         span = self.browser.find_element(By.XPATH, '//span[text()="Nazly Olmos"]')
 
         self.assertIn('Nazly Olmos', span.text)
+
+
+    def test_login(self):
+        self.browser.get('http://localhost:8000')
+
+        link = self.browser.find_element_by_id('id_login')
+        link.click()
+
+        nombreUsuario = self.browser.find_element_by_id('id_username')
+        nombreUsuario.send_keys('cncc')
+
+        clave = self.browser.find_element_by_id('id_password')
+        clave.send_keys('clave123')
+
+        botonLogin = self.browser.find_element_by_id('id_login_sesion')
+        botonLogin.click()
+
+        p = self.browser.find_element(By.XPATH, "//p[text()='Nazly Olmos']")
