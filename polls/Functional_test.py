@@ -82,3 +82,17 @@ class FunctionalTest(TestCase):
         botonLogin.click()
 
         p = self.browser.find_element(By.XPATH, "//p[text()='Nazly Olmos']")
+
+    def test_comment(self):
+        self.browser.get('http://localhost:8000')
+        span = self.browser.find_element(By.XPATH, '//span[text()="Nazly Olmos"]')
+        span.click()
+
+        correo = self.browser.find_element_by_id('correo')
+        correo.send_keys('diegofruizs@gmail.com')
+
+        comentario = self.browser.find_element_by_id('comentaralgo')
+        comentario.send_keys('Hola saludos')
+
+        btnAgregar = self.browser.find_element_by_id('comentar')
+        btnAgregar.click()
