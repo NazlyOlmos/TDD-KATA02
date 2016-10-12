@@ -65,7 +65,6 @@ class FunctionalTest(TestCase):
 
         self.assertIn('Nazly Olmos', span.text)
 
-
     def test_login(self):
         self.browser.get('http://localhost:8000')
 
@@ -91,8 +90,8 @@ class FunctionalTest(TestCase):
         correo = self.browser.find_element_by_id('correo')
         correo.send_keys('diegofruizs@gmail.com')
 
-        comentario = self.browser.find_element_by_id('comentaralgo')
+        comentario = self.browser.find_element_by_id('comentario')
         comentario.send_keys('Hola saludos')
 
-        btnAgregar = self.browser.find_element_by_id('comentar')
+        btnAgregar = self.browser.find_element_by_id('btnComentar')
         btnAgregar.click()
