@@ -27,7 +27,6 @@ def index(request):
 
 
 def login(request):
-
     username = request.POST.get('username')
 
     password = request.POST.get('password')
@@ -59,12 +58,11 @@ def register(request):
         user.email = request.POST.get('correo')
         user.save()
 
-
-
-        nuevo_trabajador=Trabajador(nombre=request.POST['nombre'],
+        nuevo_trabajador = Trabajador(nombre=request.POST['nombre'],
                                       apellidos=request.POST['apellidos'],
                                       aniosExperiencia=request.POST.get('aniosExperiencia'),
-                                      tiposDeServicio=TiposDeServicio.objects.get(pk=request.POST.get('tiposDeServicio')),
+                                      tiposDeServicio=TiposDeServicio.objects.get(
+                                          pk=request.POST.get('tiposDeServicio')),
                                       telefono=request.POST.get('telefono'),
                                       correo=request.POST.get('correo'),
                                       imagen=request.FILES['imagen'],
@@ -73,8 +71,13 @@ def register(request):
 
     return HttpResponseRedirect('/')
 
-def editar_perfil(request,idTrabajador):
-    trabajador=Trabajador.objects.get(usuarioId=idTrabajador)
+
+def editar_perfil(request, idTrabajador):
+    print("--------------------------")
+    print(request)
+    print("--------------------------")
+    print(idTrabajador)
+    trabajador = Trabajador.objects.get(usuarioId=idTrabajador)
     if request.method == 'POST':
         # formulario enviado
         form_trabajador = TrabajadorForm(request.POST, request.FILES, instance=trabajador)
@@ -91,34 +94,38 @@ def editar_perfil(request,idTrabajador):
     context = {'form_trabajador': form_trabajador}
     return render(request, 'polls/editar.html', context)
 
+
 @csrf_exempt
 def add_comment(request):
     if request.method == 'POST':
-       new_comment = Comentario(texto=request.POST.get('texto'),
-                                      trabajador=Trabajador.objects.get(pk=request.POST.get('trabajador')),
-                                      correo=request.POST.get('correo'))
-       new_comment.save()
+        new_comment = Comentario(texto=request.POST.get('texto'),
+                                 trabajador=Trabajador.objects.get(pk=request.POST.get('trabajador')),
+                                 correo=request.POST.get('correo'))
+        new_comment.save()
     return HttpResponse(serializers.serialize("json", [new_comment]))
+
 
 @csrf_exempt
 def mostrarTrabajadores(request, tipo=""):
     if tipo == "":
-      lista_trabajadores = Trabajador.objects.all()
+        lista_trabajadores = Trabajador.objects.all()
     else:
-      lista_trabajadores = Trabajador.objects.select_related().filter(tiposDeServicio__nombre__icontains=tipo)
-
+        lista_trabajadores = Trabajador.objects.select_related().filter(tiposDeServicio__nombre__icontains=tipo)
 
     return HttpResponse(serializers.serialize("json", lista_trabajadores))
 
+
 @csrf_exempt
 def mostrarComentarios(request, idTrabajador):
-    lista_comentarios =Comentario.objects.filter(trabajador=Trabajador.objects.get(pk=idTrabajador))
+    lista_comentarios = Comentario.objects.filter(trabajador=Trabajador.objects.get(pk=idTrabajador))
 
     return HttpResponse(serializers.serialize("json", lista_comentarios))
+
 
 def getTiposDeServicio(request, pk):
     tipo = TiposDeServicio.objects.get(pk=pk)
     return HttpResponse(serializers.serialize("json", [tipo]))
+
 
 def detalle_trabajador(request):
     return render(request, "polls/detalle.html")
